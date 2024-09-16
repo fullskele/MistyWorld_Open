@@ -804,7 +804,6 @@ public class ServerEventHandler {
 		int i = ModConfig.player.effectsReduction * 100;
 		if (capa.getToxic() > i) capa.setToxic(i);
 		if (capa.getPollution() > i) capa.setPollution(i);
-		//TODO проверять высоту игрока при возрождении
 	}
 
 	@SubscribeEvent
@@ -919,7 +918,7 @@ public class ServerEventHandler {
 				}
 			}
 		}
-		//TODO проверять высоту игрока при возрождении
+		//TODO пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	}
 
 	@SubscribeEvent

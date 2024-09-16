@@ -626,8 +626,8 @@ public class ModBlocks {
 		CAMPFIRE = registerBlockWithoutItem(new MistCampfire(), "campfire", null);
 		CAMP_STICK = registerBlockWithoutItem(new MistCampStick(), "camp_stick", null);
 		FLOWER_POT = registerBlockWithoutItem(new MistFlowerPot(), "flower_pot", null);
-		NIOBIUM_CHEST = registerBlock(new MistChest(MistChest.ChestType.NIOBIUM_BASIC, Material.IRON).setHardness(2).setResistance(10).setLightLevel(0.125F), "niobium_chest", tab);
-		NIOBIUM_TRAPPED_CHEST = registerBlock(new MistChest(MistChest.ChestType.NIOBIUM_TRAP, Material.IRON).setHardness(2).setResistance(10).setLightLevel(0.125F), "niobium_chest_trapped", tab);
+		NIOBIUM_CHEST = registerBlock(new MistChest(MistChest.ChestType.NIOBIUM_BASIC).setHardness(2).setResistance(10).setLightLevel(0.125F), "niobium_chest", tab);
+		NIOBIUM_TRAPPED_CHEST = registerBlock(new MistChest(MistChest.ChestType.NIOBIUM_TRAP).setHardness(2).setResistance(10).setLightLevel(0.125F), "niobium_chest_trapped", tab);
 		FURNACE = registerBlock(new MistFurnace(), "furnace", tab);
 		REMAINS = registerBlockWithoutItem(new Remains(), "remains_block", tab);
 		registerItemBlock(new ItemMistSingleNameBlock(REMAINS));

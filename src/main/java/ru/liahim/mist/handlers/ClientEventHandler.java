@@ -125,6 +125,7 @@ public class ClientEventHandler {
 					int width = res.getScaledWidth();
 					int height = res.getScaledHeight();
 					int damageShift = (mask.getMaxDamage() - mask.getItemDamage() < 20) ? 44 : 0;
+
 					if (mc.inGameHasFocus) xPos = mc.gameSettings.mainHand == EnumHandSide.RIGHT ? 189 : -29;
 					if (!filter.isEmpty()) {
 						if (IMask.getFilterDurability(filter) - mask.getTagCompound().getInteger(MistTags.nbtFilterDurabilityTag) < 150) {
@@ -136,11 +137,11 @@ public class ClientEventHandler {
 								this.prevPlayerTick = player.ticksExisted;
 							}
 						} else filterTimer = 0;
-						Gui.drawModalRectWithCustomSizedTexture((width - 176)/2 + xPos - 3, height - 22, 0, (filterTimer >= 0 ? 166 : 188) + damageShift, 22, 22, 256, 256);
-						mc.getRenderItem().renderItemAndEffectIntoGUI(filter, (width - 176)/2 + xPos, height - 19);
-						mc.getRenderItem().renderItemOverlays(mc.fontRenderer, filter, (width - 176)/2 + xPos, height - 19);
+						Gui.drawModalRectWithCustomSizedTexture((width - 176)/2 + xPos - 3 + ModConfig.player.hotbarFilterXOffset, height - 22 + ModConfig.player.hotbarFilterYOffset, 0, (filterTimer >= 0 ? 166 : 188) + damageShift, 22, 22, 256, 256);
+						mc.getRenderItem().renderItemAndEffectIntoGUI(filter, (width - 176)/2 + xPos + ModConfig.player.hotbarFilterXOffset, height - 19 + ModConfig.player.hotbarFilterYOffset);
+						mc.getRenderItem().renderItemOverlays(mc.fontRenderer, filter, (width - 176)/2 + xPos + ModConfig.player.hotbarFilterXOffset, height - 19 + ModConfig.player.hotbarFilterYOffset);
 						GlStateManager.disableLighting();
-					} else Gui.drawModalRectWithCustomSizedTexture((width - 176)/2 + xPos - 3, height - 22, 0, 166 + damageShift, 22, 22, 256, 256);
+					} else Gui.drawModalRectWithCustomSizedTexture((width - 176)/2 + xPos - 3 + ModConfig.player.hotbarFilterXOffset, height - 22 + ModConfig.player.hotbarFilterYOffset, 0, 166 + damageShift, 22, 22, 256, 256);
 				}
 				GlStateManager.enableBlend();
 				// Toxic
@@ -243,7 +244,7 @@ public class ClientEventHandler {
 				GlStateManager.pushMatrix();
 				boolean leftHand = handSide == EnumHandSide.LEFT;
 				transformEatFirstPerson(event.getPartialTicks(), handSide, stack);
-				mc.getItemRenderer().transformSideFirstPerson(handSide, event.getEquipProgress());
+				//mc.getItemRenderer().transformFirstPersonItem(equipProgress, swingProgress, handSide);
 				mc.getItemRenderer().renderItemSide(player, stack, leftHand ? ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND : ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND, leftHand);
 				GlStateManager.popMatrix();
 				event.setCanceled(true);
@@ -392,7 +393,7 @@ public class ClientEventHandler {
 				double d0 = entity.getDistanceSq(mc.getRenderViewEntity());
 		        if (d0 < 36) {
 		        	GlStateManager.alphaFunc(516, 0.1F);
-		        	event.getRenderer().renderEntityName(entity, event.getX(), event.getY() + 0.25, event.getZ(), name, d0);
+		        	event.getRenderer().renderName(entity, event.getX(), event.getY() + 0.25, event.getZ());
 		        }
 			}
 		}
@@ -402,9 +403,9 @@ public class ClientEventHandler {
 	@SubscribeEvent
 	public void playerTick(PlayerTickEvent event) {
 		if (event.side == Side.CLIENT && event.phase == Phase.START ) {
-			if (ClientProxy.maskKey.isPressed() && mc.inGameHasFocus) {
+			if (ModConfig.player.keybindMask && ClientProxy.maskKey.isPressed() && mc.inGameHasFocus) {
 				PacketHandler.INSTANCE.sendToServer(new PacketOpenMaskInventory(ItemStack.EMPTY));
-			} else if (ClientProxy.skillKey.isPressed() && mc.inGameHasFocus) {
+			} else if (ModConfig.player.keybindSkill && ClientProxy.skillKey.isPressed() && mc.inGameHasFocus) {
 				event.player.openGui(Mist.instance, 4, event.player.world, 0, 0, 0);
 			}
 			TileEntityCampfire.updateFrame();

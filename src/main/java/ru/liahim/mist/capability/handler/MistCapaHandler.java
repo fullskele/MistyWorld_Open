@@ -1,6 +1,9 @@
 package ru.liahim.mist.capability.handler;
 
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import ru.liahim.mist.api.item.IMask;
+import ru.liahim.mist.init.ModConfig;
 import ru.liahim.mist.network.PacketHandler;
 import ru.liahim.mist.network.PacketToxicSync;
 
@@ -101,6 +104,10 @@ public class MistCapaHandler extends ItemStackHandler implements IMistCapaHandle
 	@Override
 	public void addPollution(int pollution) {
 		if (pollution == 0) return;
+		if (ModConfig.player.pollutionReplaceWithPotion) {
+			player.addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation(ModConfig.player.pollutionPotion), (int)(pollution*ModConfig.player.pollutionPotionDurationMultiplier), ModConfig.player.pollutionPotionAmplifier));
+			return;
+		}
 		this.prevPollution = this.pollution;
 		this.pollution += pollution;
 		if (this.pollution < 0) this.pollution = 0;
@@ -128,6 +135,11 @@ public class MistCapaHandler extends ItemStackHandler implements IMistCapaHandle
 	@Override
 	public void addToxic(int toxic) {
 		if (toxic == 0) return;
+		if (ModConfig.player.intoxicationReplaceWithPotion) {
+
+			player.addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation(ModConfig.player.intoxicationPotion), (int)(toxic*ModConfig.player.intoxicationPotionDurationMultiplier), ModConfig.player.intoxicationPotionAmplifier));
+			return;
+		}
 		this.prevToxic = this.toxic;
 		this.toxic += toxic;
 		if (this.toxic < 0) this.toxic = 0;

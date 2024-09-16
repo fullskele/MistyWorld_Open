@@ -18,10 +18,11 @@ import ru.liahim.mist.api.block.MistBlocks;
 import ru.liahim.mist.block.MistPortalStone;
 import ru.liahim.mist.handlers.ServerEventHandler;
 import ru.liahim.mist.init.ModAdvancements;
+import ru.liahim.mist.init.ModConfig;
 import ru.liahim.mist.util.PlayerLocationData;
 import ru.liahim.mist.util.PortalCoordData;
 import ru.liahim.mist.world.MistWorld;
-import ru.liahim.mist.world.biome.BiomeMistUp;
+import ru.liahim.mist.world.biome.*;
 
 public class MistTeleporter extends Teleporter {
 
@@ -87,12 +88,20 @@ public class MistTeleporter extends Teleporter {
 
 	private boolean isSafeBiomeAt(BlockPos pos) {
 		if (this.dimOut == Mist.getID()) {
-			if (this.worldServerInstance.getBiome(pos) instanceof BiomeMistUp)
-				return true;
-			else return false;
-		} else {
-			return true;
+			switch (ModConfig.dimension.portalSpawnLayer) {
+				case 0:
+                    return this.worldServerInstance.getBiome(pos) instanceof BiomeMistUp;
+				case 1:
+                    return this.worldServerInstance.getBiome(pos) instanceof BiomeMistBorderUp;
+				case 2:
+                    return this.worldServerInstance.getBiome(pos) instanceof BiomeMistBorderDown;
+				case 3:
+                    return this.worldServerInstance.getBiome(pos) instanceof BiomeMistDown;
+				case 4:
+                    return this.worldServerInstance.getBiome(pos) instanceof BiomeMistDownCenter;
+			}
 		}
+		return true;
 	}
 
 	private BlockPos findSafeCoords(int range, Entity entityIn) {
@@ -152,7 +161,6 @@ public class MistTeleporter extends Teleporter {
 			entity.motionZ = 0;
 			entity.rotationYaw = rotationYaw;
 			if (entity instanceof EntityPlayerMP) {
-				((EntityPlayerMP)entity).invulnerableDimensionChange = true;
 				((EntityPlayerMP)entity).connection.setPlayerLocation(x, y, z, entity.rotationYaw, entity.rotationPitch);
 				if (this.dimOut == Mist.getID()) {
 					this.spawnPoses.addSpawnPos((EntityPlayerMP)entity, MathHelper.floor(x), MathHelper.floor(y), MathHelper.floor(z));

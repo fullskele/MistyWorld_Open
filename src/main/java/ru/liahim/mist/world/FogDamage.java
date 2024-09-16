@@ -22,6 +22,7 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -39,6 +40,7 @@ import ru.liahim.mist.api.item.ISuit;
 import ru.liahim.mist.capability.handler.IMistCapaHandler;
 import ru.liahim.mist.common.Mist;
 import ru.liahim.mist.init.ModAdvancements;
+import ru.liahim.mist.init.ModConfig;
 
 public class FogDamage {
 	private static final UUID healthUUID = UUID.fromString("4e65bedc-27d8-44da-8d8e-4493874517ab");
@@ -78,11 +80,10 @@ public class FogDamage {
 				boolean adsorbentTick = adsorbent && isAdsorbentTick(entity.ticksExisted);
 				float adsorbentFactor = adsorbent ? 1 - getFinalEfficiency(adsorbentTick ? 90 : 30, concentration) : 1;
 
-				float rainDamage = rain ? getRainDamage(concentration)*depth/4 : 0;
+				float rainDamage = (rain && ModConfig.dimension.acidRainDamage) ? getRainDamage(concentration)*depth/4 : 0;
 				float fogDamage = getFogDamage(concentration)*depth/4;
 				float toxic = getFogToxic(concentration)*depth/4;
 				boolean pollutionTick = isPollutionTick(entity.ticksExisted);
-
 				boolean isMask = false;
 				boolean pollutionProtection = false;
 				float pollutionFactor = 1;
@@ -96,6 +97,10 @@ public class FogDamage {
 						filteringDepth = 1 - getFinalEfficiency(filteringDepth, concentration);
 						fogDamage *= filteringDepth;
 						toxic *= filteringDepth;
+					} else if (ModConfig.player.potionFilterAllow && player.isPotionActive(Potion.getPotionFromResourceLocation(ModConfig.player.potionFilter))) {
+						isMask = true;
+						fogDamage = 0;
+						toxic = 0;
 					}
 					if (rainDamage > 0 || pollutionTick) {
 						float[] suitFactor = getPollutionProtection(player);

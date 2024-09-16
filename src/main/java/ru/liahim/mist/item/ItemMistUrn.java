@@ -24,6 +24,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import ru.liahim.mist.common.Mist;
+import ru.liahim.mist.init.ModConfig;
 import ru.liahim.mist.tileentity.TileEntityUrn.UrnType;
 
 public class ItemMistUrn extends ItemBlock {
@@ -61,7 +62,9 @@ public class ItemMistUrn extends ItemBlock {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		ItemStack stack = player.getHeldItem(hand);
-		if (stack.getItemDamage() != 0) return new ActionResult(EnumActionResult.FAIL, stack);
+
+		//TODO: Allow right click to place when inventory use disabled
+		if (stack.getItemDamage() != 0 || !ModConfig.player.urnInventoryOpening) return new ActionResult(EnumActionResult.FAIL, stack);
 		if (!world.isRemote && hand == EnumHand.MAIN_HAND) player.openGui(Mist.instance, 6, world, MathHelper.floor(player.posX), MathHelper.floor(player.posY), MathHelper.floor(player.posZ));
 		return new ActionResult(EnumActionResult.PASS, stack);
 	}

@@ -19,17 +19,34 @@ public class InventoryBasicMist extends InventoryBasic {
 	}
 
 	public NonNullList<ItemStack> getItems() {
-		return this.inventoryContents;
+		NonNullList<ItemStack> items = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
+		for (int i = 0; i < this.getSizeInventory(); ++i) {
+			items.set(i, this.getStackInSlot(i));
+		}
+		return items;
 	}
 
+	/*
 	public void setItems(NonNullList<ItemStack> content) {
 		ItemStack stack;
-		for (int i = 0; i < content.size() && i < this.inventoryContents.size(); ++i) {
+		for (int i = 0; i < content.size() && i < this.getItems().size(); ++i) {
 			stack = content.get(i);
-			this.inventoryContents.set(i, stack);
+			this.getItems().set(i, stack);
 	        if (!stack.isEmpty() && stack.getCount() > this.getInventoryStackLimit()) {
 	            stack.setCount(this.getInventoryStackLimit());
 	        }
+		}
+		this.markDirty();
+	}
+	*/
+
+	public void setItems(NonNullList<ItemStack> content) {
+		for (int i = 0; i < content.size() && i < this.getSizeInventory(); ++i) {
+			ItemStack stack = content.get(i);
+			this.setInventorySlotContents(i, stack);
+			if (!stack.isEmpty() && stack.getCount() > this.getInventoryStackLimit()) {
+				stack.setCount(this.getInventoryStackLimit());
+			}
 		}
 		this.markDirty();
 	}

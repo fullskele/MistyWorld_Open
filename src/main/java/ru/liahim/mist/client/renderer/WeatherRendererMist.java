@@ -19,6 +19,26 @@ public class WeatherRendererMist extends IRenderHandler {
 	private static final ResourceLocation RAIN_TEXTURES = new ResourceLocation("mist:textures/environment/rain.png");
     private static final ResourceLocation SNOW_TEXTURES = new ResourceLocation("textures/environment/snow.png");
 
+    private final float[] rainXCoords = initializeRainCoords(true);
+    private final float[] rainYCoords = initializeRainCoords(false);
+
+    private static float[] initializeRainCoords(boolean isX) {
+        float[] coords = new float[1024];
+        for (int i = 0; i < 32; ++i) {
+            for (int j = 0; j < 32; ++j) {
+                float f = (float)(j - 16);
+                float f1 = (float)(i - 16);
+                float f2 = MathHelper.sqrt(f * f + f1 * f1);
+                if (isX) {
+                    coords[i << 5 | j] = -f1 / f2;
+                } else {
+                    coords[i << 5 | j] = f / f2;
+                }
+            }
+        }
+        return coords;
+    }
+
 	@Override
 	public void render(float partialTicks, WorldClient world, Minecraft mc) {
 		float f = mc.world.getRainStrength(partialTicks);
@@ -45,7 +65,7 @@ public class WeatherRendererMist extends IRenderHandler {
             if (mc.gameSettings.fancyGraphics) i1 = 10;
 
             int j1 = -1;
-            float f1 = mc.entityRenderer.rendererUpdateCount + partialTicks;
+            float f1 = (System.currentTimeMillis() + partialTicks) % 360; // Example usage, adjust as needed
             bufferbuilder.setTranslation(-d0, -d1, -d2);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
@@ -58,8 +78,12 @@ public class WeatherRendererMist extends IRenderHandler {
             for (int k1 = k - i1; k1 <= k + i1; ++k1) {
                 for (int l1 = i - i1; l1 <= i + i1; ++l1) {
                     int i2 = (k1 - k + 16) * 32 + l1 - i + 16;
-                    double d3 = mc.entityRenderer.rainXCoords[i2] * 0.5D;
-                    double d4 = mc.entityRenderer.rainYCoords[i2] * 0.5D;
+                            /*
+                    double d3 = (mc.player.posX + (Math.random() - 0.5) * 100) * 0.5D;
+                    double d4 = (mc.player.posY + (Math.random() - 0.5) * 100) * 0.5D;
+                            */
+                    double d3 = (double)rainXCoords[i2] * 0.5D;
+                    double d4 = (double)rainYCoords[i2] * 0.5D;
                     blockpos$mutableblockpos.setPos(l1, 0, k1);
                     Biome biome = world.getBiome(blockpos$mutableblockpos);
 
@@ -74,7 +98,7 @@ public class WeatherRendererMist extends IRenderHandler {
                         if (j2 < l) i3 = l;
 
                         if (k2 != l2) {
-                        	mc.entityRenderer.random.setSeed(l1 * l1 * 3121 + l1 * 45238971 ^ k1 * k1 * 418711 + k1 * 13761);
+                        	mc.world.rand.setSeed(l1 * l1 * 3121 + l1 * 45238971 ^ k1 * k1 * 418711 + k1 * 13761);
                             blockpos$mutableblockpos.setPos(l1, k2, k1);
                             float f2 = biome.getTemperature(blockpos$mutableblockpos);
 
@@ -86,7 +110,7 @@ public class WeatherRendererMist extends IRenderHandler {
                                     bufferbuilder.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
                                 }
 
-                                double d5 = -((double)(mc.entityRenderer.rendererUpdateCount + l1 * l1 * 3121 + l1 * 45238971 + k1 * k1 * 418711 + k1 * 13761 & 31) + (double)partialTicks) / 32.0D * (3.0D + mc.entityRenderer.random.nextDouble());
+                                double d5 = -((double)(System.currentTimeMillis() + l1 * l1 * 3121 + l1 * 45238971 + k1 * k1 * 418711 + k1 * 13761 & 31) + (double)partialTicks) / 32.0D * (3.0D + mc.world.rand.nextDouble());
                                 double d6 = l1 + 0.5F - entity.posX;
                                 double d7 = k1 + 0.5F - entity.posZ;
                                 float f3 = MathHelper.sqrt(d6 * d6 + d7 * d7) / i1;
@@ -107,9 +131,10 @@ public class WeatherRendererMist extends IRenderHandler {
                                     bufferbuilder.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
                                 }
 
-                                double d8 = -((mc.entityRenderer.rendererUpdateCount & 511) + partialTicks) / 512.0F;
-                                double d9 = mc.entityRenderer.random.nextDouble() + f1 * 0.01D * ((float)mc.entityRenderer.random.nextGaussian());
-                                double d10 = mc.entityRenderer.random.nextDouble() + f1 * (float)mc.entityRenderer.random.nextGaussian() * 0.001D;
+                                //Slow the fall down
+                                double d8 = -(((System.currentTimeMillis()/4) & 511) + partialTicks) / 512.0F;
+                                double d9 = mc.world.rand.nextDouble() + f1 * 0.01D * ((float)mc.world.rand.nextGaussian());
+                                double d10 = mc.world.rand.nextDouble() + f1 * (float)mc.world.rand.nextGaussian() * 0.001D;
                                 double d11 = l1 + 0.5F - entity.posX;
                                 double d12 = k1 + 0.5F - entity.posZ;
                                 float f6 = MathHelper.sqrt(d11 * d11 + d12 * d12) / i1;

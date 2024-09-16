@@ -37,7 +37,7 @@ public class RecipesUrnDyes extends IForgeRegistryEntry.Impl<IRecipe> implements
 					urn = stack;
 				} else {
 					if (stack.getItem() == Items.DYE) {
-						int color = EnumDyeColor.byDyeDamage(stack.getMetadata()).colorValue;
+						int color = EnumDyeColor.byDyeDamage(stack.getMetadata()).getColorValue();
 						r += color >> 16 & 255;
 						g += color >> 8 & 255;
 						b += color & 255;

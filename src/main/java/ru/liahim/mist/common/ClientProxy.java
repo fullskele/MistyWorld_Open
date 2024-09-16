@@ -57,10 +57,18 @@ public class ClientProxy extends CommonProxy {
 	public static final MusicType MIST_SUNSET_UP_MUSIC = EnumHelper.addEnum(MusicType.class, "mist_sunset_up", new Class[] {SoundEvent.class, int.class, int.class}, ModSounds.registerSoundEvent("mist_sunset_up_music"), 0, 0);
 	public static final MusicType MIST_SUNSET_DOWN_MUSIC = EnumHelper.addEnum(MusicType.class, "mist_sunset_down", new Class[] {SoundEvent.class, int.class, int.class}, ModSounds.registerSoundEvent("mist_sunset_down_music"), 0, 0);
 	//public static ModelResourceLocation acidBucket = new ModelResourceLocation("mist:acid_bucket", "inventory");
-	public static KeyBinding maskKey = new KeyBinding(I18n.format("keybind.mist.mask_inventory"), Keyboard.KEY_M, "key.categories.inventory");
-	public static KeyBinding skillKey = new KeyBinding(I18n.format("keybind.mist.skill_inventory"), Keyboard.KEY_I, "key.categories.inventory");
+	public static KeyBinding maskKey;
+	public static KeyBinding skillKey;
 	private static List<Block> blocksToColour = Lists.newArrayList();
 	private static List<Item> itemsToColor = Lists.newArrayList();
+
+	static {
+		if (ModConfig.player.keybindMask)
+			maskKey = new KeyBinding(I18n.format("keybind.mist.mask_inventory"), Keyboard.KEY_M, "key.categories.inventory");
+		if (ModConfig.player.keybindSkill)
+			skillKey = new KeyBinding(I18n.format("keybind.mist.skill_inventory"), Keyboard.KEY_I, "key.categories.inventory");
+	}
+
 	@Override
 	public void setClientSeed(long seed) { MistWorld.setClientSeed(seed); }
 	@Override
@@ -83,8 +91,10 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
-		ClientRegistry.registerKeyBinding(maskKey);
-		ClientRegistry.registerKeyBinding(skillKey);
+		if (ModConfig.player.keybindMask)
+			ClientRegistry.registerKeyBinding(maskKey);
+		if (ModConfig.player.keybindSkill)
+			ClientRegistry.registerKeyBinding(skillKey);
 		registerLayerRenderer();
 		registerColouring();
 	}

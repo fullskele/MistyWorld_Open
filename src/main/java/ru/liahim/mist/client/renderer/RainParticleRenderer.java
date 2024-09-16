@@ -28,7 +28,8 @@ public class RainParticleRenderer extends IRenderHandler {
 		if (!mc.gameSettings.fancyGraphics) f /= 2.0F;
 
 		if (f != 0.0F) {
-			mc.entityRenderer.random.setSeed(mc.entityRenderer.rendererUpdateCount * 312987231L);
+			//long seed = System.currentTimeMillis() * 312987231L;
+			//mc.world.rand.setSeed(seed);
 			Entity entity = mc.getRenderViewEntity();
 			BlockPos blockpos = new BlockPos(entity);
 			int i = 10;
@@ -42,26 +43,27 @@ public class RainParticleRenderer extends IRenderHandler {
 			else if (mc.gameSettings.particleSetting == 2) k = 0;
 
 			for (int l = 0; l < k; ++l) {
-				BlockPos blockpos1 = world.getPrecipitationHeight(blockpos.add(mc.entityRenderer.random.nextInt(10) - mc.entityRenderer.random.nextInt(10), 0, mc.entityRenderer.random.nextInt(10) - mc.entityRenderer.random.nextInt(10)));
+				BlockPos blockpos1 = world.getPrecipitationHeight(blockpos.add(mc.world.rand.nextInt(10) - mc.world.rand.nextInt(10), 0, mc.world.rand.nextInt(10) - mc.world.rand.nextInt(10)));
 				Biome biome = world.getBiome(blockpos1);
 				BlockPos blockpos2 = blockpos1.down();
 				IBlockState iblockstate = world.getBlockState(blockpos2);
 
 				if (blockpos1.getY() <= blockpos.getY() + 10 && blockpos1.getY() >= blockpos.getY() - 10 && biome.canRain() && biome.getTemperature(blockpos1) >= 0.15F) {
-					double d3 = mc.entityRenderer.random.nextDouble();
-					double d4 = mc.entityRenderer.random.nextDouble();
+					double d3 = mc.world.rand.nextDouble();
+					double d4 = mc.world.rand.nextDouble();
 					AxisAlignedBB axisalignedbb = iblockstate.getBoundingBox(world, blockpos2);
 
 					if (iblockstate.getMaterial() != Material.LAVA && iblockstate.getBlock() != Blocks.MAGMA) {
 						if (iblockstate.getMaterial() != Material.AIR) {
 							++j;
 
-							if (mc.entityRenderer.random.nextInt(j) == 0) {
+							if (mc.world.rand.nextInt(j) == 0) {
 								d0 = blockpos2.getX() + d3;
 								d1 = blockpos2.getY() + 0.1F + axisalignedbb.maxY - 1.0D;
 								d2 = blockpos2.getZ() + d4;
 							}
 
+							//TODO: Bugfix this statement
 							if (FogRenderer.fogHeight > blockpos2.getY() + 4) mc.effectRenderer.addEffect(new ParticleAcidRain(world, blockpos2.getX() + d3, blockpos2.getY() + 0.1F + axisalignedbb.maxY, blockpos2.getZ() + d4));
 							else world.spawnParticle(EnumParticleTypes.WATER_DROP, blockpos2.getX() + d3, blockpos2.getY() + 0.1F + axisalignedbb.maxY, blockpos2.getZ() + d4, 0.0D, 0.0D, 0.0D, new int[0]);
 						}
@@ -71,7 +73,7 @@ public class RainParticleRenderer extends IRenderHandler {
 				}
 			}
 
-			if (j > 0 && mc.entityRenderer.random.nextInt(3) < this.rainSoundCounter++) {
+			if (j > 0 && mc.world.rand.nextInt(3) < this.rainSoundCounter++) {
 				this.rainSoundCounter = 0;
 				if (d1 > blockpos.getY() + 1 && world.getPrecipitationHeight(blockpos).getY() > MathHelper.floor(blockpos.getY())) {
 					world.playSound(d0, d1, d2, SoundEvents.WEATHER_RAIN_ABOVE, SoundCategory.WEATHER, 0.1F, 0.5F, false);

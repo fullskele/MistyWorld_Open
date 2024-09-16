@@ -25,7 +25,7 @@ public class MistMusic extends PositionedSound implements ITickableSound {
 			this.volume *= 0.99;
 			if (this.volume <= 0.001F) {
 				this.donePlaying = true;
-				Minecraft.getMinecraft().getMusicTicker().timeUntilNextMusic = ClientEventHandler.fadeOut;
+				//Minecraft.getMinecraft().getMusicTicker(). = ClientEventHandler.fadeOut;
 			}
 		}
 	}

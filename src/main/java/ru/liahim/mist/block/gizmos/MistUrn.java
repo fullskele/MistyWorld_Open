@@ -38,6 +38,7 @@ import ru.liahim.mist.api.block.MistBlocks;
 import ru.liahim.mist.api.sound.MistSounds;
 import ru.liahim.mist.common.Mist;
 import ru.liahim.mist.entity.EntityGraveBug;
+import ru.liahim.mist.init.ModConfig;
 import ru.liahim.mist.tileentity.TileEntityUrn;
 import ru.liahim.mist.tileentity.TileEntityUrn.UrnType;
 import ru.liahim.mist.util.ColorHelper;
@@ -126,7 +127,14 @@ public class MistUrn extends MistBlockContainer implements IColoredBlock, IShift
 			if ((urn.isBug() && this.spawnBug(world, pos)) ||
 					(urn.getUrnType().isRare() && urn.getLootTable() != null && world.rand.nextInt(breakChance) == 0)) {
 				this.destroy(world, player, pos, te);
-			} else spawnAsEntity(world, pos, this.getUrnItem(te));
+			} else {
+				if (ModConfig.player.urnAlwaysBreaks) {
+					this.destroy(world, player, pos, te);
+				} else {
+					spawnAsEntity(world, pos, this.getUrnItem(te));
+
+				}
+			}
 		}
 	}
 

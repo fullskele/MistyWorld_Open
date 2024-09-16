@@ -137,8 +137,10 @@ public class AnnotationHooks {
 					int rgbfordisplay = 0xFFFFFF;
 					int i = Math.round(13.0F - (float) health * 13.0F);
 					int j = rgbfordisplay;
-					ri.draw(bufferbuilder, xPosition + 2, yPosition + 14, 13, 2, 0, 0, 0, 255);
-					ri.draw(bufferbuilder, xPosition + 2, yPosition + 14, i, 1, j >> 16 & 255, j >> 8 & 255, j & 255, 255);
+					bufferbuilder.pos(xPosition + 2, yPosition + 14, 0).color(0, 0, 0, 255).endVertex();
+					Tessellator.getInstance().draw();
+					bufferbuilder.pos(xPosition + 2, yPosition + 14, 0).color((j >> 16) & 255, (j >> 8) & 255, j & 255, 255).endVertex();
+					Tessellator.getInstance().draw();
 					GlStateManager.enableBlend();
 					GlStateManager.enableAlpha();
 					GlStateManager.enableTexture2D();

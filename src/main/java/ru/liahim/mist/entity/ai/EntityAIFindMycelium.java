@@ -9,6 +9,7 @@ import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.pathfinding.Path;
+import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ChunkCache;
@@ -63,17 +64,25 @@ public class EntityAIFindMycelium extends EntityAIBase {
 		boolean finder = this.entity instanceof IMyceliumFinder;
 		int i = finder ? ((IMyceliumFinder)this.entity).getFindingRange() : this.range;
 		ChunkCache chunkcache = new ChunkCache(this.entity.world, this.entity.getPosition().add(-i, -i, -i), this.entity.getPosition().add(i, i, i), 0);
-		Path path = this.entity.getNavigator().pathFinder.findPath(chunkcache, this.entity, this.pos, this.range);
+
+		// Get the PathNavigate instance
+		PathNavigate navigator = this.entity.getNavigator();
+		// Create a new Path using the public method available in PathNavigate
+		Path path = navigator.getPathToXYZ(this.pos.getX(), this.pos.getY(), this.pos.getZ());
+
 		if (path == null) {
 			if (finder) ((IMyceliumFinder)this.entity).playNotFindSound();
 			this.reset();
+		} else {
+			navigator.setPath(path, this.speed);
 		}
-		this.entity.getNavigator().setPath(path, this.speed);
+
 		if (this.delayCounter <= 0 || this.lastMushroom == null || this.mushroom != this.lastMushroom) {
 			this.delayCounter = 50;
 			this.lastMushroom = this.mushroom;
 		}
 	}
+
 
 	@Override
 	public boolean shouldContinueExecuting() {

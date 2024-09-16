@@ -29,14 +29,6 @@ public class MistChest extends BlockChest {
 		this.setCreativeTab(Mist.mistTab);
 	}
 
-	public MistChest(ChestType chestType, Material material) {
-		super(MIST_CHEST);
-		this.type = chestType;
-		this.blockMaterial = material;
-		this.blockMapColor = material.getMaterialMapColor();
-		this.translucent = !material.blocksLight();
-		this.setCreativeTab(Mist.mistTab);
-	}
 
 	@Override
 	public String getUnlocalizedName() {

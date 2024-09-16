@@ -17,6 +17,7 @@ public class GuiMaskButton extends GuiButton {
 	
 	private boolean isMask;
 	private GuiContainer gui;
+	private boolean configRenderMaskButton = false;
 
 	public GuiMaskButton(int buttonId, int left, int top, int width, int height, boolean isMask, GuiContainer gui, String buttonText) {
 		super(buttonId, left, top, width, height, buttonText);
@@ -26,12 +27,14 @@ public class GuiMaskButton extends GuiButton {
 
 	@Override
 	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
-		return super.mousePressed(mc, mouseX, mouseY);
+		if (configRenderMaskButton)
+			return super.mousePressed(mc, mouseX, mouseY);
+		return false;
 	}
 
 	@Override
 	public void drawButton(Minecraft mc, int xx, int yy, float partialTicks) {
-		if (this.visible) {
+		if (this.visible && configRenderMaskButton) {
 			this.x = this.gui.getGuiLeft() + 8;
 			FontRenderer fontrenderer = mc.fontRenderer;
 			mc.getTextureManager().bindTexture(GuiMask.slotMask);

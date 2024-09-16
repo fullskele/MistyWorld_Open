@@ -162,10 +162,13 @@ public class EntityRubberBall extends EntityThrowable {
 				}
 			}
 
+			/* TODO Reimplement
 			if (this.ignoreEntity != null) {
 				if (flag) this.ignoreTime = 2;
 				else if (this.ignoreTime-- <= 0) this.ignoreEntity = null;
 			}
+
+			 */
 
 			if (entity != null) raytrace = new RayTraceResult(entity);
 

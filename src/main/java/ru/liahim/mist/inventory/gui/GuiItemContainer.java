@@ -25,9 +25,7 @@ public abstract class GuiItemContainer extends GuiContainer {
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
-	@Override
-	public void drawSlot(Slot slot) {
-		super.drawSlot(slot);
+	protected void drawSlot(Slot slot) {
 		if (this.isItem && slot.inventory == this.playerInventory && slot.getSlotIndex() == this.playerInventory.currentItem &&
 				!this.isPointInRegion(slot.xPos, slot.yPos, 16, 16, this.mouseX, this.mouseY)) {
 	        GlStateManager.disableLighting();
@@ -44,7 +42,7 @@ public abstract class GuiItemContainer extends GuiContainer {
 
 	@Override
 	protected void renderHoveredToolTip(int mouseX, int mouseY) {
-		if (this.hoveredSlot != null && (!this.isItem || this.hoveredSlot.inventory != this.playerInventory || this.hoveredSlot.getSlotIndex() != this.playerInventory.currentItem)) {
+		if (this.getSlotUnderMouse() != null && (!this.isItem || this.getSlotUnderMouse().inventory != this.playerInventory || this.getSlotUnderMouse().getSlotIndex() != this.playerInventory.currentItem)) {
 			super.renderHoveredToolTip(mouseX, mouseY);
 		}
 	}

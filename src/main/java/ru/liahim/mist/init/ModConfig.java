@@ -37,17 +37,17 @@ public class ModConfig {
 	@Ignore private static final Map<ItemStack,Vector2f> stoneColors = new HashMap<ItemStack,Vector2f>();
 
 	@LangKey("config.mist.dimension")
-    public static Dimension dimension = new Dimension();
+	public static Dimension dimension = new Dimension();
 	@LangKey("config.mist.player")
-    public static Player player = new Player();
+	public static Player player = new Player();
 	@LangKey("config.mist.graphic")
-    public static Graphic graphic = new Graphic();
+	public static Graphic graphic = new Graphic();
 	@LangKey("config.mist.campfire")
-    public static Campfire campfire = new Campfire();
+	public static Campfire campfire = new Campfire();
 	@LangKey("config.mist.time")
-    public static Time time = new Time();
+	public static Time time = new Time();
 	@LangKey("config.mist.generation")
-    public static Generation generation = new Generation();
+	public static Generation generation = new Generation();
 
 	public static void init() {}
 
@@ -100,6 +100,15 @@ public class ModConfig {
 		public boolean disableCascadingLog = true;
 
 		@Ignore public static final ArrayList<Integer> loadedDimBlackList = new ArrayList<Integer>();
+
+		@LangKey("config.mist.dimension.allow_acid_rain_damage")
+		@Comment("Disable acid rain damage. Note that this will not disable the poisoning caused by acid rain.")
+		public boolean acidRainDamage = true;
+
+		@LangKey("config.mist.dimension.portal_spawn_layer")
+		@Comment("Which 'layer' of the dimension to allow portal spawns in. 0 = Up Biomes, 1 = Border-Up Biomes, 2 = Border-Down Biomes, 3 = Down Biomes, 4 = Center-Down Biomes")
+		@RangeInt(min = 0, max = 4)
+		public int portalSpawnLayer = 0;
 	}
 
 	public static class Player {
@@ -133,11 +142,76 @@ public class ModConfig {
 		@LangKey("config.mist.player.mobs_for_skill")
 		@Comment("A list of creatures (not monsters) whose killing will increase the cutting skill (modId:mobName:points or modId:*:points for all mobs in the mod). For example: mist:mossling:1, mist:monk:2, mist:brachiodon:3")
 		public String[] mobsForSkill = {};
+
+		@LangKey("config.mist.player.allow_potion_for_filter")
+		@Comment("Whether to allow a specific potion effect to act as a stand-in for an air filter")
+		public boolean potionFilterAllow = false;
+
+		@LangKey("config.mist.player.filter_potion")
+		@Comment("Which potion to act as a stand-in for an air filter: ModID:potionID")
+		public String potionFilter = "minecraft:absorption";
+
+		@LangKey("config.mist.player.urn_always_breaks")
+		@Comment("Whether if mining an urn always results in the urn shattering")
+		public boolean urnAlwaysBreaks = false;
+
+		@LangKey("config.mist.player.allow_urn_opening_inventory")
+		@Comment("Whether to allow the player to use the urn in their inventory (without placing it down)")
+		public boolean urnInventoryOpening = true;
+
+		@LangKey("config.mist.player.allow_mask_keybind")
+		@Comment("Whether to enable the mask inventory keybind")
+		public boolean keybindMask = true;
+
+		@LangKey("config.mist.player.allow_skill_keybind")
+		@Comment("Whether to enable the skill screen keybind")
+		public boolean keybindSkill = true;
+
+		@LangKey("config.mist.player.replace_pollution_with_potion")
+		@Comment("Whether to replace all occurences of Pollution with a potion effect tick")
+		public boolean pollutionReplaceWithPotion = false;
+
+		@LangKey("config.mist.player.pollution_potion")
+		@Comment("Which potion to apply instead of Pollution: ModID:potionID")
+		public String pollutionPotion = "minecraft:slowness";
+
+		@LangKey("config.mist.player.pollution_potion_amplifier")
+		@Comment("Amplifier of the Pollution potion")
+		public int pollutionPotionAmplifier = 0;
+
+		@LangKey("config.mist.player.pollution_potion_duration_multiplier")
+		@Comment("Multiplier for the Pollution potion duration")
+		public double pollutionPotionDurationMultiplier = 0.25;
+
+		@LangKey("config.mist.player.replace_intoxication_with_potion")
+		@Comment("Whether to replace all occurences of Intoxication with a potion effect tick")
+		public boolean intoxicationReplaceWithPotion = false;
+
+		@LangKey("config.mist.player.intoxication_potion")
+		@Comment("Which potion to apply instead of Intoxication: ModID:potionID")
+		public String intoxicationPotion = "minecraft:poison";
+
+		@LangKey("config.mist.player.intoxication_potion_amplifier")
+		@Comment("Amplifier of the Intoxication potion")
+		public int intoxicationPotionAmplifier = 0;
+
+		@LangKey("config.mist.player.intoxication_potion_duration_multiplier")
+		@Comment("Multiplier for the Intoxication potion duration")
+		public double intoxicationPotionDurationMultiplier = 0.25;
+
+		@LangKey("config.mist.player.filter_hotbar_x_offset")
+		@Comment("X Offset for Air Filter Hotbar Slot")
+		public int hotbarFilterXOffset = 0;
+
+		@LangKey("config.mist.player.filter_hotbar_y_offset")
+		@Comment("Y Offset for Air Filter Hotbar Slot")
+		public int hotbarFilterYOffset = 0;
 	}
 
 	public static class Graphic {
 
-		@Ignore public static boolean smoothFogTexture = Mist.proxy.hasOptifine();
+		//@Ignore public static boolean smoothFogTexture = Mist.proxy.hasOptifine();
+		@Ignore public static boolean smoothFogTexture = false;
 		@Ignore public static boolean mipMapOptimization = smoothFogTexture;
 
 		@LangKey("config.mist.graphic.fog")
@@ -155,12 +229,12 @@ public class ModConfig {
 		@LangKey("config.mist.campfire.stones")
 		@Comment("The stones are available for the creation of the campfire base (ModID:Item:Required quantity:Metadata:Color)")
 		public String[] stoneAndColors = {	"mist:rocks:4:0:9bb6af",
-											"minecraft:cobblestone:1:0:bcbcbc",
-											"minecraft:brick:4:0:c46c58",
-											"minecraft:netherbrick:4:0:522932",
-											"minecraft:flint:4:0:262626",
-											"minecraft:dye:4:4:3052c1",
-											"minecraft:prismarine_shard:4:0:92f0de" };
+				"minecraft:cobblestone:1:0:bcbcbc",
+				"minecraft:brick:4:0:c46c58",
+				"minecraft:netherbrick:4:0:522932",
+				"minecraft:flint:4:0:262626",
+				"minecraft:dye:4:4:3052c1",
+				"minecraft:prismarine_shard:4:0:92f0de" };
 
 		@LangKey("config.mist.campfire.effects")
 		@Comment("Enable pottage effects display")
@@ -264,7 +338,7 @@ public class ModConfig {
             	if (j != 0L) seed = j;
             }
         }*/
-        //MistWorld.setCustomSeed(seed);
+		//MistWorld.setCustomSeed(seed);
 		return seed;
 	}
 

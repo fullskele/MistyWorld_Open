@@ -619,11 +619,16 @@ public class TileEntityCampfire extends TileEntity implements ITickable, ISidedI
 							}
 						} else {
 							if (pufferfish) {
-								pf_1 = new PotionEffect[] { new PotionEffect(MobEffects.POISON, 1200, 3), new PotionEffect(MobEffects.HUNGER, 300, 2), new PotionEffect(MobEffects.NAUSEA, 300, 1) };
-							} else pf_1 = new PotionEffect[] { ((ItemFood)food.getItem()).potionId };
-							float prob = pufferfish ? 1 : ((ItemFood)food.getItem()).potionEffectProbability;
-							for (PotionEffect pf_3 : pf_1) {
-								if (pf_3 != null) this.rawPotionsHelper.put(pf_3.getPotion(), new Vector3f(pf_3.getDuration() * prob, pf_3.getAmplifier(), 0));
+								// Define the potion effects directly if it's a pufferfish
+								PotionEffect[] effects = {
+										new PotionEffect(MobEffects.POISON, 600, 2),
+										new PotionEffect(MobEffects.HUNGER, 300, 1),
+										new PotionEffect(MobEffects.NAUSEA, 300, 1)
+								};
+								float prob = 1; // Probability is 1 for pufferfish
+								for (PotionEffect effect : effects) {
+									this.cookPotionsHelper.put(effect.getPotion(), new Vector3f(effect.getDuration() * prob, effect.getAmplifier(), 0));
+								}
 							}
 						}
 						if (resFood) {
@@ -637,11 +642,16 @@ public class TileEntityCampfire extends TileEntity implements ITickable, ISidedI
 								}
 							} else {
 								if (pufferfish) {
-									pf_1 = new PotionEffect[] { new PotionEffect(MobEffects.POISON, 600, 2), new PotionEffect(MobEffects.HUNGER, 300, 1), new PotionEffect(MobEffects.NAUSEA, 300, 1) };
-								} else pf_1 = new PotionEffect[] { ((ItemFood)result.getItem()).potionId };
-								float prob = pufferfish ? 1 : ((ItemFood)result.getItem()).potionEffectProbability;
-								for (PotionEffect pf_3 : pf_1) {
-									if (pf_3 != null) this.cookPotionsHelper.put(pf_3.getPotion(), new Vector3f(pf_3.getDuration() * prob, pf_3.getAmplifier(), 0));
+									// Define the potion effects directly if it's a pufferfish
+									PotionEffect[] effects = {
+											new PotionEffect(MobEffects.POISON, 600, 2),
+											new PotionEffect(MobEffects.HUNGER, 300, 1),
+											new PotionEffect(MobEffects.NAUSEA, 300, 1)
+									};
+									float prob = 1; // Probability is 1 for pufferfish
+									for (PotionEffect effect : effects) {
+										this.cookPotionsHelper.put(effect.getPotion(), new Vector3f(effect.getDuration() * prob, effect.getAmplifier(), 0));
+									}
 								}
 							}
 							if (!this.rawPotionsHelper.isEmpty()) {

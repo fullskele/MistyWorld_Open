@@ -29,6 +29,8 @@ public class MistRegistry {
 	public static final Map<ResourceLocation, Integer> mobsForSkill = Maps.newHashMap();
 	public static final Set<String> mobsDimsBlackList = Sets.newHashSet();
 	public static final Set<ResourceLocation> mobsBlackList = Sets.newHashSet();
+	public static final Set<ResourceLocation> mobImmunities = Sets.newHashSet();
+	public static final Set<String> mobImmunitiesMod = Sets.newHashSet();
 	private static final Map<Block, HarvestType> harvestTypeList = Maps.newHashMap();
 	private static final Set<ItemStack> compostIngredients = Sets.newHashSet();
 	private static final Set<IShiftPlaceable> shiftPlaceableBlocks = Sets.newHashSet();

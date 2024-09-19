@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import javax.vecmath.Vector2f;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -109,6 +110,10 @@ public class ModConfig {
 		@Comment("Which 'layer' of the dimension to allow portal spawns in. 0 = Up Biomes, 1 = Border-Up Biomes, 2 = Border-Down Biomes, 3 = Down Biomes, 4 = Center-Down Biomes")
 		@RangeInt(min = 0, max = 4)
 		public int portalSpawnLayer = 0;
+
+		@LangKey("config.mist.dimension.mob_immunities")
+		@Comment("Blacklist of mobs that are immune to the mist (modId:mobName or modId:* for all mobs in the mod). For example: minecraft:pig")
+		public String[] mobImmunities = {};
 	}
 
 	public static class Player {
@@ -322,6 +327,7 @@ public class ModConfig {
 		ModConfig.applyFilterCoalBreakers();
 		ModConfig.applyMobsForSkill();
 		ModConfig.applyMobsBlackList();
+		ModConfig.applyMobImmunities();
 		TombGen.updateChance();
 		Mist.proxy.onConfigChange();
 	}
@@ -575,6 +581,36 @@ public class ModConfig {
 						MistRegistry.mobsBlackList.add(res);
 					}
 				} else MistRegistry.mobsDimsBlackList.add(pettern[0]);
+			}
+		}
+	}
+
+	private static void applyMobImmunities() {
+		MistRegistry.mobImmunities.clear();
+		MistRegistry.mobImmunitiesMod.clear();
+		Pattern splitpattern = Pattern.compile(":");
+		for (int i = 0; i < ModConfig.dimension.mobImmunities.length; i++) {
+			String[] pettern = splitpattern.split(ModConfig.dimension.mobImmunities[i]);
+			if (pettern.length != 2) {
+				Mist.logger.warn("Invalid set of parameters at mobImmunities line " + (i + 1));
+				continue;
+			}
+			if (!Loader.isModLoaded(pettern[0])) {
+				Mist.logger.warn("Cannot found the modId \"" + pettern[0] + "\" from mobImmunities line " + (i + 1));
+				continue;
+			} else {
+				if (!pettern[1].equals("*")) {
+					ResourceLocation res = new ResourceLocation(pettern[0], pettern[1]);
+					if (!ForgeRegistries.ENTITIES.containsKey(res)) {
+						Mist.logger.warn("Cannot found the mob \"" + pettern[0] + ":" + pettern[1] + "\" from mobImmunities line " + (i + 1));
+						continue;
+					} else if (MistRegistry.mobImmunities.contains(res)) {
+						Mist.logger.warn("Mob \"" + pettern[0] + ":" + pettern[1] + "\" is already exist (mobImmunities, line " + (i + 1) + ")");
+						continue;
+					} else {
+						MistRegistry.mobImmunities.add(res);
+					}
+				} else MistRegistry.mobImmunitiesMod.add(pettern[0]);
 			}
 		}
 	}

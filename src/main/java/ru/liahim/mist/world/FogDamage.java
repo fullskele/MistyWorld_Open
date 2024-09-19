@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -24,6 +25,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.PooledMutableBlockPos;
@@ -37,6 +39,7 @@ import ru.liahim.mist.api.block.MistBlocks;
 import ru.liahim.mist.api.event.PollutionEvent;
 import ru.liahim.mist.api.item.IMask;
 import ru.liahim.mist.api.item.ISuit;
+import ru.liahim.mist.api.registry.MistRegistry;
 import ru.liahim.mist.capability.handler.IMistCapaHandler;
 import ru.liahim.mist.common.Mist;
 import ru.liahim.mist.init.ModAdvancements;
@@ -63,6 +66,11 @@ public class FogDamage {
 				if (entity instanceof EntityGolem) return;
 				if (entity instanceof EntityBlaze) return;
 				if (entity instanceof EntityMagmaCube) return;
+				ResourceLocation res = EntityList.getKey(entity);
+				if (res != null && MistRegistry.mobImmunitiesMod.contains(res.getResourceDomain()) || MistRegistry.mobImmunities.contains(res)) {
+					return;
+				}
+
 			} else if ((player.isCreative() || player.isSpectator()) || player.getHealth() == 0) return;
 			IMistCapaHandler mistCapa = isPlayer ? IMistCapaHandler.getHandler(player) : null;
 			float eyeHeight = entity.getEyeHeight();

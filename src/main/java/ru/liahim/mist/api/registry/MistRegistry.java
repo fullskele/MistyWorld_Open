@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
+
 import ru.liahim.mist.api.block.IMistStoneBasic;
 import ru.liahim.mist.api.block.IMistStoneUpper;
 import ru.liahim.mist.api.block.IShiftPlaceable;
@@ -21,6 +22,8 @@ import net.minecraft.world.World;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
+import static net.minecraft.init.Blocks.GOLD_BLOCK;
+
 public class MistRegistry {
 
 	public static final Set<Item> filterCoalBreakers = Sets.newHashSet();
@@ -30,7 +33,9 @@ public class MistRegistry {
 	public static final Set<String> mobsDimsBlackList = Sets.newHashSet();
 	public static final Set<ResourceLocation> mobsBlackList = Sets.newHashSet();
 	public static final Set<ResourceLocation> mobImmunities = Sets.newHashSet();
+	public static final Set<Item> helmetFilters = Sets.newHashSet();
 	public static final Set<String> mobImmunitiesMod = Sets.newHashSet();
+	public static Block middlePortalBlock = GOLD_BLOCK;
 	private static final Map<Block, HarvestType> harvestTypeList = Maps.newHashMap();
 	private static final Set<ItemStack> compostIngredients = Sets.newHashSet();
 	private static final Set<IShiftPlaceable> shiftPlaceableBlocks = Sets.newHashSet();

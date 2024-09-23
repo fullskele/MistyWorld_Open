@@ -21,11 +21,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.PooledMutableBlockPos;
@@ -109,6 +111,23 @@ public class FogDamage {
 						isMask = true;
 						fogDamage = 0;
 						toxic = 0;
+					} else if (ModConfig.player.helmetFilters.length > 0) {
+						ItemStack helmet = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
+						Item helmetItem = helmet.getItem();
+						if (MistRegistry.helmetFilters.contains(helmetItem)) {
+							isMask = true;
+							fogDamage = 0;
+							toxic = 0;
+
+							if (ModConfig.player.helmetFiltersTakeDamage && helmet.isItemStackDamageable()) {
+								helmet.damageItem(1, player);
+
+								if (helmet.getItemDamage() >= helmet.getMaxDamage()) {
+									player.world.playSound(null, player.posX, player.posY, player.posZ, net.minecraft.init.SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.PLAYERS, 1.0F, 1.0F);
+									player.setItemStackToSlot(EntityEquipmentSlot.HEAD, ItemStack.EMPTY);
+								}
+							}
+						}
 					}
 					if (rainDamage > 0 || pollutionTick) {
 						float[] suitFactor = getPollutionProtection(player);

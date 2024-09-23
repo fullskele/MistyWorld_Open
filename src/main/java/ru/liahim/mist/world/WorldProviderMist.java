@@ -49,6 +49,12 @@ public class WorldProviderMist extends WorldProvider {
 	}
 
 	@Override
+	public boolean canRespawnHere()
+	{
+		return ModConfig.player.respawnInMist;
+	}
+
+	@Override
 	public long getSeed() {
 		return MistWorld.getCustomSeed() == 0L ? super.getSeed() : MistWorld.getCustomSeed();
 	}

@@ -29,6 +29,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import ru.liahim.mist.api.block.MistBlocks;
+import ru.liahim.mist.api.registry.MistRegistry;
 import ru.liahim.mist.init.ModConfig.Dimension;
 
 public class MistPortalStone extends MistBlock {
@@ -91,7 +92,7 @@ public class MistPortalStone extends MistBlock {
             BlockPos portalPos = isUp ? pos.down() : pos.up();
             BlockPos anotherBasePos = isUp ? pos.down(2) : pos.up(2);
             IBlockState anotherState = world.getBlockState(anotherBasePos);
-            if (world.getBlockState(portalPos).getBlock() == Blocks.GOLD_BLOCK &&
+            if (world.getBlockState(portalPos).getBlock() == MistRegistry.middlePortalBlock &&
                 anotherState.getBlock() == MistBlocks.PORTAL_BASE &&
                 anotherState.getValue(ISUP) == !isUp) createPortal(world, portalPos);
 		}
@@ -111,7 +112,7 @@ public class MistPortalStone extends MistBlock {
 				BlockPos portalPos = pos.down();
 				BlockPos bottomPos = pos.down(2);
 				IBlockState bottomState = world.getBlockState(bottomPos);
-				if (state.getValue(ISUP) && world.getBlockState(portalPos).getBlock() == Blocks.GOLD_BLOCK && bottomState.getBlock() == MistBlocks.PORTAL_BASE && !bottomState.getValue(ISUP)) {
+				if (state.getValue(ISUP) && world.getBlockState(portalPos).getBlock() == MistRegistry.middlePortalBlock && bottomState.getBlock() == MistBlocks.PORTAL_BASE && !bottomState.getValue(ISUP)) {
 					createPortal(world, portalPos);
 				}
 			} else {

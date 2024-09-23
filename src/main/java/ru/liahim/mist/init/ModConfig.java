@@ -7,7 +7,9 @@ import java.util.regex.Pattern;
 
 import javax.vecmath.Vector2f;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -114,6 +116,10 @@ public class ModConfig {
 		@LangKey("config.mist.dimension.mob_immunities")
 		@Comment("Blacklist of mobs that are immune to the mist (modId:mobName or modId:* for all mobs in the mod). For example: minecraft:pig")
 		public String[] mobImmunities = {};
+
+		@LangKey("config.mist.dimension.portal_middle_block")
+		@Comment("ModId:ItemId of the middle portal block")
+		public String portalMiddleBlock = "minecraft:gold_block";
 	}
 
 	public static class Player {
@@ -211,6 +217,18 @@ public class ModConfig {
 		@LangKey("config.mist.player.filter_hotbar_y_offset")
 		@Comment("Y Offset for Air Filter Hotbar Slot")
 		public int hotbarFilterYOffset = 0;
+
+		@LangKey("config.mist.player.respawn_in_mist")
+		@Comment("Toggle whether respawning back into the Misty World is permitted")
+		public boolean respawnInMist = true;
+
+		@LangKey("config.mist.player.helmet_filters")
+		@Comment("List of helmets that allow for mist filtration")
+		public String[] helmetFilters = {};
+
+		@LangKey("config.mist.player.helmet_filters_take_damage")
+		@Comment("Whether or not helmets that allow for mist filtration take damage each filtered tick")
+		public boolean helmetFiltersTakeDamage = true;
 	}
 
 	public static class Graphic {
@@ -328,8 +346,15 @@ public class ModConfig {
 		ModConfig.applyMobsForSkill();
 		ModConfig.applyMobsBlackList();
 		ModConfig.applyMobImmunities();
+		ModConfig.applyHelmetFilters();
+		ModConfig.verifyPortalBlock();
 		TombGen.updateChance();
 		Mist.proxy.onConfigChange();
+	}
+
+	private static void verifyPortalBlock() {
+		Block newMiddleBlock = Block.getBlockFromName(ModConfig.dimension.portalMiddleBlock);
+		if (newMiddleBlock == null) MistRegistry.middlePortalBlock = newMiddleBlock;
 	}
 
 	public static long getCustomSeed(long seed) {
@@ -481,6 +506,29 @@ public class ModConfig {
 			}
 		}
 		if (MistRegistry.mistStoneBreakers.isEmpty()) MistRegistry.mistStoneBreakers.put(MistItems.NIOBIUM_PICKAXE, new int[] {1, 8, 8});
+	}
+
+	private static void applyHelmetFilters() {
+		MistRegistry.helmetFilters.clear();
+		Pattern splitpattern = Pattern.compile(":");
+		for (int i = 0; i < ModConfig.player.helmetFilters.length; i++) {
+			String s = ModConfig.player.helmetFilters[i];
+			String[] pettern = splitpattern.split(s);
+			if (pettern.length != 2) {
+				Mist.logger.warn("Invalid set of parameters at helmetFilters line " + (i + 1));
+				continue;
+			}
+			ResourceLocation res = new ResourceLocation(pettern[0], pettern[1]);
+			Item item;
+			if (ForgeRegistries.ITEMS.containsKey(res)) {
+				item = ForgeRegistries.ITEMS.getValue(res);
+			} else {
+				Mist.logger.warn("Cannot found item \"" + pettern[0] + ":" + pettern[1] + "\" from helmetFilters line " + (i + 1));
+				continue;
+			}
+			if (MistRegistry.helmetFilters.contains(item)) Mist.logger.warn("Item \"" + pettern[0] + ":" + pettern[1] + "\" is already exist (helmetFilters, line " + (i + 1) + ")");
+			else MistRegistry.helmetFilters.add(item);
+		}
 	}
 
 	public static void applyFilterCoalBreakers() {

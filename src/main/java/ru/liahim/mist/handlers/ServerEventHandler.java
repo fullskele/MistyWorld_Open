@@ -365,11 +365,11 @@ public class ServerEventHandler {
 		if (!world.isRemote) {
 			Block block = event.getState().getBlock();
 			if (!Dimension.loadedDimBlackList.contains(world.provider.getDimension()) && 
-					(block == Blocks.GOLD_BLOCK || block == MistBlocks.PORTAL_BASE)) {
+					(block == MistRegistry.middlePortalBlock || block == MistBlocks.PORTAL_BASE)) {
 				boolean check = false;
 				BlockPos pos = event.getPos();
 				BlockPos portalPos = BlockPos.ORIGIN;
-				if (block == Blocks.GOLD_BLOCK) {
+				if (block == MistRegistry.middlePortalBlock) {
 					IBlockState up = world.getBlockState(pos.up());
 					IBlockState down = world.getBlockState(pos.down());
 					if (up.getBlock() == MistBlocks.PORTAL_BASE && up.getValue(MistPortalStone.ISUP) &&
@@ -383,7 +383,7 @@ public class ServerEventHandler {
 					BlockPos anotherBasePos = isUp ? pos.down(2) : pos.up(2);
 					IBlockState portalState = world.getBlockState(portalPos);
 					IBlockState checkState = world.getBlockState(anotherBasePos);
-					if (portalState.getBlock() == Blocks.GOLD_BLOCK &&
+					if (portalState.getBlock() == MistRegistry.middlePortalBlock &&
 					    checkState.getBlock() == MistBlocks.PORTAL_BASE &&
 					    checkState.getValue(MistPortalStone.ISUP) == !isUp) check = true;
 				}

@@ -20,8 +20,8 @@ public class RecipesUrnDyes extends IForgeRegistryEntry.Impl<IRecipe> implements
 
 	private ItemStack resultItem = ItemStack.EMPTY;
 
-	@Override
-	public boolean matches(InventoryCrafting inv, World world) {
+		@Override
+		public boolean matches(InventoryCrafting inv, World world) {
 		this.resultItem = ItemStack.EMPTY;
 		ItemStack urn = ItemStack.EMPTY;
 		ItemStack tool = ItemStack.EMPTY;
@@ -37,10 +37,13 @@ public class RecipesUrnDyes extends IForgeRegistryEntry.Impl<IRecipe> implements
 					urn = stack;
 				} else {
 					if (stack.getItem() == Items.DYE) {
-						int color = EnumDyeColor.byDyeDamage(stack.getMetadata()).getColorValue();
-						r += color >> 16 & 255;
-						g += color >> 8 & 255;
-						b += color & 255;
+						float[] components = EnumDyeColor.byDyeDamage(stack.getMetadata()).getColorComponentValues();
+						int red = (int)(components[0] * 255);
+						int green = (int)(components[1] * 255);
+						int blue = (int)(components[2] * 255);
+						r += red;
+						g += green;
+						b += blue;
 						++j;
 					} else {
 						if (!UrnType.isTool(stack)) return false;

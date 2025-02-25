@@ -393,70 +393,70 @@ public class TileEntityUrn extends TileEntityLockableLoot implements ITickable {
 	private static final ResourceLocation[] JUNGLE_TOMB_LOOT = new ResourceLocation[] { LootTables.URN_FUNERARY_LOOT, LootTables.URN_MIXED_LOOT, LootTables.URN_RICHES_LOOT };
 	private static final ResourceLocation[] SNOW_TOMB_LOOT = new ResourceLocation[]   { LootTables.URN_RICHES_LOOT, LootTables.URN_MIXED_LOOT, LootTables.URN_FUNERARY_LOOT };
 
-	private static final int forestColor_1 = ColorHelper.mixColor(EnumDyeColor.ORANGE.getColorValue(), EnumDyeColor.YELLOW.getColorValue(), EnumDyeColor.SILVER.getColorValue(), EnumDyeColor.SILVER.getColorValue(), EnumDyeColor.SILVER.getColorValue());
-	private static final int forestColor_2 = EnumDyeColor.BROWN.getColorValue();
-	private static final int desertColor_1 = ColorHelper.mixColor(EnumDyeColor.YELLOW.getColorValue(), EnumDyeColor.YELLOW.getColorValue(), EnumDyeColor.YELLOW.getColorValue(), EnumDyeColor.ORANGE.getColorValue(), EnumDyeColor.LIME.getColorValue(), EnumDyeColor.SILVER.getColorValue());
-	private static final int desertColor_2 = ColorHelper.mixColor(EnumDyeColor.BROWN.getColorValue(), EnumDyeColor.ORANGE.getColorValue(), EnumDyeColor.SILVER.getColorValue());
-	private static final int desertColor_3 = ColorHelper.mixColor(EnumDyeColor.YELLOW.getColorValue(), EnumDyeColor.SILVER.getColorValue(), EnumDyeColor.SILVER.getColorValue(), EnumDyeColor.WHITE.getColorValue());
-	private static final int desertColor_4 = ColorHelper.mixColor(EnumDyeColor.BLUE.getColorValue(),EnumDyeColor.BLUE.getColorValue(), EnumDyeColor.BLUE.getColorValue(), EnumDyeColor.CYAN.getColorValue(), EnumDyeColor.YELLOW.getColorValue());
-	private static final int jungleColor_1 = ColorHelper.mixColor(EnumDyeColor.BLACK.getColorValue(), EnumDyeColor.RED.getColorValue());
-	private static final int jungleColor_2 = ColorHelper.mixColor(EnumDyeColor.ORANGE.getColorValue(),EnumDyeColor.RED.getColorValue());
-	private static final int snowColor_1 = ColorHelper.mixColor(EnumDyeColor.BLACK.getColorValue(), EnumDyeColor.SILVER.getColorValue(), EnumDyeColor.BROWN.getColorValue());
-	private static final int snowColor_2 = ColorHelper.mixColor(EnumDyeColor.SILVER.getColorValue(), EnumDyeColor.SILVER.getColorValue(), EnumDyeColor.BROWN.getColorValue());
-	private static final int snowColor_3 = ColorHelper.mixColor(EnumDyeColor.ORANGE.getColorValue(), EnumDyeColor.SILVER.getColorValue(), EnumDyeColor.SILVER.getColorValue());
-	private static final int swampColor_1 = ColorHelper.mixColor(EnumDyeColor.GREEN.getColorValue(), EnumDyeColor.LIGHT_BLUE.getColorValue(), EnumDyeColor.ORANGE.getColorValue());
-	private static final int swampColor_2 = ColorHelper.mixColor(EnumDyeColor.GREEN.getColorValue(), EnumDyeColor.BROWN.getColorValue());
+	private static final int forestColor_1 = mixColor(EnumDyeColor.ORANGE.getColorComponentValues(), EnumDyeColor.YELLOW.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues());
+	private static final int forestColor_2 = mixColor(EnumDyeColor.BROWN.getColorComponentValues());
+	private static final int desertColor_1 = mixColor(EnumDyeColor.YELLOW.getColorComponentValues(), EnumDyeColor.YELLOW.getColorComponentValues(), EnumDyeColor.YELLOW.getColorComponentValues(), EnumDyeColor.ORANGE.getColorComponentValues(), EnumDyeColor.LIME.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues());
+	private static final int desertColor_2 = mixColor(EnumDyeColor.BROWN.getColorComponentValues(), EnumDyeColor.ORANGE.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues());
+	private static final int desertColor_3 = mixColor(EnumDyeColor.YELLOW.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues(), EnumDyeColor.WHITE.getColorComponentValues());
+	private static final int desertColor_4 = mixColor(EnumDyeColor.BLUE.getColorComponentValues(),EnumDyeColor.BLUE.getColorComponentValues(), EnumDyeColor.BLUE.getColorComponentValues(), EnumDyeColor.CYAN.getColorComponentValues(), EnumDyeColor.YELLOW.getColorComponentValues());
+	private static final int jungleColor_1 = mixColor(EnumDyeColor.BLACK.getColorComponentValues(), EnumDyeColor.RED.getColorComponentValues());
+	private static final int jungleColor_2 = mixColor(EnumDyeColor.ORANGE.getColorComponentValues(),EnumDyeColor.RED.getColorComponentValues());
+	private static final int snowColor_1 = mixColor(EnumDyeColor.BLACK.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues(), EnumDyeColor.BROWN.getColorComponentValues());
+	private static final int snowColor_2 = mixColor(EnumDyeColor.SILVER.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues(), EnumDyeColor.BROWN.getColorComponentValues());
+	private static final int snowColor_3 = mixColor(EnumDyeColor.ORANGE.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues());
+	private static final int swampColor_1 = mixColor(EnumDyeColor.GREEN.getColorComponentValues(), EnumDyeColor.LIGHT_BLUE.getColorComponentValues(), EnumDyeColor.ORANGE.getColorComponentValues());
+	private static final int swampColor_2 = mixColor(EnumDyeColor.GREEN.getColorComponentValues(), EnumDyeColor.BROWN.getColorComponentValues());
 
 	public static enum UrnLootType {
 
-		SWAMP_BASEMENTS_1(UrnType.ZONE, ColorHelper.mixColor(EnumDyeColor.LIME.getColorValue(), EnumDyeColor.LIME.getColorValue(), EnumDyeColor.BROWN.getColorValue()), ColorHelper.mixColor(EnumDyeColor.LIME.getColorValue(), EnumDyeColor.GREEN.getColorValue(), EnumDyeColor.BROWN.getColorValue()), "basement", "swamp", LootTables.URN_BASEMENTS_SWAMP_LOOT),
-		SWAMP_BASEMENTS_2(UrnType.PATINA, ColorHelper.mixColor(EnumDyeColor.BROWN.getColorValue(), EnumDyeColor.BROWN.getColorValue(), EnumDyeColor.LIME.getColorValue(), EnumDyeColor.CYAN.getColorValue(), EnumDyeColor.WHITE.getColorValue()), ColorHelper.mixColor(EnumDyeColor.BROWN.getColorValue(), EnumDyeColor.BLUE.getColorValue(), EnumDyeColor.WHITE.getColorValue()), "basement", "swamp", LootTables.URN_BASEMENTS_SWAMP_LOOT),
-		SWAMP_BASEMENTS_3(UrnType.STARS, ColorHelper.mixColor(EnumDyeColor.BROWN.getColorValue(), EnumDyeColor.LIME.getColorValue(), EnumDyeColor.SILVER.getColorValue()), ColorHelper.mixColor(EnumDyeColor.BROWN.getColorValue(), EnumDyeColor.GREEN.getColorValue(), EnumDyeColor.GREEN.getColorValue()), "basement", "swamp", LootTables.URN_BASEMENTS_SWAMP_LOOT),
-		SWAMP_WELLS_1(UrnType.PATINA, ColorHelper.mixColor(EnumDyeColor.YELLOW.getColorValue(), EnumDyeColor.YELLOW.getColorValue(), EnumDyeColor.SILVER.getColorValue(), EnumDyeColor.SILVER.getColorValue(), EnumDyeColor.SILVER.getColorValue(), EnumDyeColor.LIGHT_BLUE.getColorValue()), EnumDyeColor.GREEN.getColorValue(), "well", "swamp", LootTables.URN_WELLS_LOOT),
-		SWAMP_WELLS_2(UrnType.PATINA, ColorHelper.mixColor(EnumDyeColor.LIGHT_BLUE.getColorValue(), EnumDyeColor.LIGHT_BLUE.getColorValue(), EnumDyeColor.LIGHT_BLUE.getColorValue(), EnumDyeColor.SILVER.getColorValue(), EnumDyeColor.SILVER.getColorValue(), EnumDyeColor.SILVER.getColorValue(), EnumDyeColor.ORANGE.getColorValue(), EnumDyeColor.BROWN.getColorValue()), EnumDyeColor.GREEN.getColorValue(), "well", "swamp", LootTables.URN_WELLS_LOOT),
+		SWAMP_BASEMENTS_1(UrnType.ZONE, mixColor(EnumDyeColor.LIME.getColorComponentValues(), EnumDyeColor.LIME.getColorComponentValues(), EnumDyeColor.BROWN.getColorComponentValues()), mixColor(EnumDyeColor.LIME.getColorComponentValues(), EnumDyeColor.GREEN.getColorComponentValues(), EnumDyeColor.BROWN.getColorComponentValues()), "basement", "swamp", LootTables.URN_BASEMENTS_SWAMP_LOOT),
+		SWAMP_BASEMENTS_2(UrnType.PATINA, mixColor(EnumDyeColor.BROWN.getColorComponentValues(), EnumDyeColor.BROWN.getColorComponentValues(), EnumDyeColor.LIME.getColorComponentValues(), EnumDyeColor.CYAN.getColorComponentValues(), EnumDyeColor.WHITE.getColorComponentValues()), mixColor(EnumDyeColor.BROWN.getColorComponentValues(), EnumDyeColor.BLUE.getColorComponentValues(), EnumDyeColor.WHITE.getColorComponentValues()), "basement", "swamp", LootTables.URN_BASEMENTS_SWAMP_LOOT),
+		SWAMP_BASEMENTS_3(UrnType.STARS, mixColor(EnumDyeColor.BROWN.getColorComponentValues(), EnumDyeColor.LIME.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues()), mixColor(EnumDyeColor.BROWN.getColorComponentValues(), EnumDyeColor.GREEN.getColorComponentValues(), EnumDyeColor.GREEN.getColorComponentValues()), "basement", "swamp", LootTables.URN_BASEMENTS_SWAMP_LOOT),
+		SWAMP_WELLS_1(UrnType.PATINA, mixColor(EnumDyeColor.YELLOW.getColorComponentValues(), EnumDyeColor.YELLOW.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues(), EnumDyeColor.LIGHT_BLUE.getColorComponentValues()), mixColor(EnumDyeColor.GREEN.getColorComponentValues()), "well", "swamp", LootTables.URN_WELLS_LOOT),
+		SWAMP_WELLS_2(UrnType.PATINA, mixColor(EnumDyeColor.LIGHT_BLUE.getColorComponentValues(), EnumDyeColor.LIGHT_BLUE.getColorComponentValues(), EnumDyeColor.LIGHT_BLUE.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues(), EnumDyeColor.ORANGE.getColorComponentValues(), EnumDyeColor.BROWN.getColorComponentValues()), mixColor(EnumDyeColor.GREEN.getColorComponentValues()), "well", "swamp", LootTables.URN_WELLS_LOOT),
 		SWAMP_TOMB_1(UrnType.STRIPE, swampColor_1, swampColor_2, "burial", "swamp", SWAMP_TOMB_LOOT),
 		SWAMP_TOMB_2(UrnType.ZONE, swampColor_1, swampColor_2, "burial", "swamp", SWAMP_TOMB_LOOT),
 		SWAMP_TOMB_3(UrnType.PATINA, swampColor_1, swampColor_2, "burial", "swamp", SWAMP_TOMB_LOOT),
 		SWAMP_TOMB_4(UrnType.STARS, swampColor_1, swampColor_2, "burial", "swamp", SWAMP_TOMB_LOOT),
 		SWAMP_TOMB_5(UrnType.CLOTH, swampColor_1, swampColor_2, "burial", "swamp", SWAMP_TOMB_LOOT),
-		DESERT_ALTAR_1(UrnType.STARS, ColorHelper.mixColor(EnumDyeColor.BLUE.getColorValue(), EnumDyeColor.CYAN.getColorValue(), EnumDyeColor.WHITE.getColorValue()), ColorHelper.mixColor(EnumDyeColor.BLUE.getColorValue(), EnumDyeColor.LIGHT_BLUE.getColorValue(), EnumDyeColor.BROWN.getColorValue()), "altar", "desert", LootTables.URN_ALTARS_DESERT_LOOT),
+		DESERT_ALTAR_1(UrnType.STARS, mixColor(EnumDyeColor.BLUE.getColorComponentValues(), EnumDyeColor.CYAN.getColorComponentValues(), EnumDyeColor.WHITE.getColorComponentValues()), mixColor(EnumDyeColor.BLUE.getColorComponentValues(), EnumDyeColor.LIGHT_BLUE.getColorComponentValues(), EnumDyeColor.BROWN.getColorComponentValues()), "altar", "desert", LootTables.URN_ALTARS_DESERT_LOOT),
 		DESERT_BASEMENTS_1(UrnType.STRIPE, desertColor_3, desertColor_4, "basement", "desert", LootTables.URN_BASEMENTS_DESERT_LOOT),
 		DESERT_BASEMENTS_2(UrnType.PATINA, desertColor_3, desertColor_4, "basement", "desert", LootTables.URN_BASEMENTS_DESERT_LOOT),
 		DESERT_BASEMENTS_3(UrnType.LINE, desertColor_3, desertColor_4, "basement", "desert", LootTables.URN_BASEMENTS_DESERT_LOOT),
-		DESERT_WELLS_1(UrnType.PATINA, ColorHelper.mixColor(EnumDyeColor.BLUE.getColorValue(), EnumDyeColor.LIGHT_BLUE.getColorValue(), EnumDyeColor.YELLOW.getColorValue()), ColorHelper.mixColor(EnumDyeColor.BLUE.getColorValue(), EnumDyeColor.LIGHT_BLUE.getColorValue(), EnumDyeColor.BROWN.getColorValue()), "well", "desert", LootTables.URN_WELLS_LOOT),
-		DESERT_WELLS_2(UrnType.STARS, ColorHelper.mixColor(EnumDyeColor.LIGHT_BLUE.getColorValue(), EnumDyeColor.LIGHT_BLUE.getColorValue(), EnumDyeColor.YELLOW.getColorValue(), EnumDyeColor.ORANGE.getColorValue(), EnumDyeColor.SILVER.getColorValue()), ColorHelper.mixColor(EnumDyeColor.BLUE.getColorValue(), EnumDyeColor.CYAN.getColorValue(), EnumDyeColor.SILVER.getColorValue(), EnumDyeColor.SILVER.getColorValue()), "well", "desert", LootTables.URN_WELLS_LOOT),
+		DESERT_WELLS_1(UrnType.PATINA, mixColor(EnumDyeColor.BLUE.getColorComponentValues(), EnumDyeColor.LIGHT_BLUE.getColorComponentValues(), EnumDyeColor.YELLOW.getColorComponentValues()), mixColor(EnumDyeColor.BLUE.getColorComponentValues(), EnumDyeColor.LIGHT_BLUE.getColorComponentValues(), EnumDyeColor.BROWN.getColorComponentValues()), "well", "desert", LootTables.URN_WELLS_LOOT),
+		DESERT_WELLS_2(UrnType.STARS, mixColor(EnumDyeColor.LIGHT_BLUE.getColorComponentValues(), EnumDyeColor.LIGHT_BLUE.getColorComponentValues(), EnumDyeColor.YELLOW.getColorComponentValues(), EnumDyeColor.ORANGE.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues()), mixColor(EnumDyeColor.BLUE.getColorComponentValues(), EnumDyeColor.CYAN.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues()), "well", "desert", LootTables.URN_WELLS_LOOT),
 		DESERT_TOMB_1(UrnType.ZONE, desertColor_1, desertColor_2, "burial", "desert", DESERT_TOMB_LOOT),
 		DESERT_TOMB_2(UrnType.ZONE, desertColor_2, desertColor_1, "burial", "desert", DESERT_TOMB_LOOT),
 		DESERT_TOMB_3(UrnType.LINE, desertColor_1, desertColor_2, "burial", "desert", DESERT_TOMB_LOOT),
 		DESERT_TOMB_4(UrnType.STARS, desertColor_2, desertColor_1, "burial", "desert", DESERT_TOMB_LOOT),
 		DESERT_TOMB_5(UrnType.NORMAL, desertColor_1, desertColor_2, "burial", "desert", DESERT_TOMB_LOOT),
-		JUNGLE_BASEMENTS_1(UrnType.PATINA, ColorHelper.mixColor(EnumDyeColor.ORANGE.getColorValue(), EnumDyeColor.RED.getColorValue(), EnumDyeColor.SILVER.getColorValue(), EnumDyeColor.YELLOW.getColorValue()), ColorHelper.mixColor(EnumDyeColor.ORANGE.getColorValue(), EnumDyeColor.CYAN.getColorValue()), "basement", "jungle", LootTables.URN_BASEMENTS_JUNGLE_LOOT),
-		JUNGLE_BASEMENTS_2(UrnType.PATINA, ColorHelper.mixColor(EnumDyeColor.ORANGE.getColorValue()), ColorHelper.mixColor(EnumDyeColor.ORANGE.getColorValue(), EnumDyeColor.RED.getColorValue()), "basement", "jungle", LootTables.URN_BASEMENTS_JUNGLE_LOOT),
-		JUNGLE_BASEMENTS_3(UrnType.PATINA, -1, ColorHelper.mixColor(EnumDyeColor.ORANGE.getColorValue(), EnumDyeColor.CYAN.getColorValue(), EnumDyeColor.CYAN.getColorValue()), "basement", "jungle", LootTables.URN_BASEMENTS_JUNGLE_LOOT),
-		JUNGLE_WELLS_1(UrnType.PATINA, ColorHelper.mixColor(EnumDyeColor.YELLOW.getColorValue(), EnumDyeColor.ORANGE.getColorValue(), EnumDyeColor.SILVER.getColorValue()), ColorHelper.mixColor(EnumDyeColor.GREEN.getColorValue(), EnumDyeColor.LIME.getColorValue()), "well", "jungle", LootTables.URN_WELLS_LOOT),
-		JUNGLE_WELLS_2(UrnType.PATINA, ColorHelper.mixColor(EnumDyeColor.RED.getColorValue(), EnumDyeColor.ORANGE.getColorValue(), EnumDyeColor.SILVER.getColorValue(), EnumDyeColor.SILVER.getColorValue(), EnumDyeColor.SILVER.getColorValue()), ColorHelper.mixColor(EnumDyeColor.GREEN.getColorValue(), EnumDyeColor.GREEN.getColorValue(), EnumDyeColor.SILVER.getColorValue()), "well", "jungle", LootTables.URN_WELLS_LOOT),
+		JUNGLE_BASEMENTS_1(UrnType.PATINA, mixColor(EnumDyeColor.ORANGE.getColorComponentValues(), EnumDyeColor.RED.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues(), EnumDyeColor.YELLOW.getColorComponentValues()), mixColor(EnumDyeColor.ORANGE.getColorComponentValues(), EnumDyeColor.CYAN.getColorComponentValues()), "basement", "jungle", LootTables.URN_BASEMENTS_JUNGLE_LOOT),
+		JUNGLE_BASEMENTS_2(UrnType.PATINA, mixColor(EnumDyeColor.ORANGE.getColorComponentValues()), mixColor(EnumDyeColor.ORANGE.getColorComponentValues(), EnumDyeColor.RED.getColorComponentValues()), "basement", "jungle", LootTables.URN_BASEMENTS_JUNGLE_LOOT),
+		JUNGLE_BASEMENTS_3(UrnType.PATINA, -1, mixColor(EnumDyeColor.ORANGE.getColorComponentValues(), EnumDyeColor.CYAN.getColorComponentValues(), EnumDyeColor.CYAN.getColorComponentValues()), "basement", "jungle", LootTables.URN_BASEMENTS_JUNGLE_LOOT),
+		JUNGLE_WELLS_1(UrnType.PATINA, mixColor(EnumDyeColor.YELLOW.getColorComponentValues(), EnumDyeColor.ORANGE.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues()), mixColor(EnumDyeColor.GREEN.getColorComponentValues(), EnumDyeColor.LIME.getColorComponentValues()), "well", "jungle", LootTables.URN_WELLS_LOOT),
+		JUNGLE_WELLS_2(UrnType.PATINA, mixColor(EnumDyeColor.RED.getColorComponentValues(), EnumDyeColor.ORANGE.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues()), mixColor(EnumDyeColor.GREEN.getColorComponentValues(), EnumDyeColor.GREEN.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues()), "well", "jungle", LootTables.URN_WELLS_LOOT),
 		JUNGLE_TOMB_1(UrnType.CLOTH, jungleColor_1, jungleColor_2, "burial", "jungle", JUNGLE_TOMB_LOOT),
 		JUNGLE_TOMB_2(UrnType.STRIPE, jungleColor_1, jungleColor_2, "burial", "jungle", JUNGLE_TOMB_LOOT),
 		JUNGLE_TOMB_3(UrnType.ZONE, jungleColor_1, jungleColor_2, "burial", "jungle", JUNGLE_TOMB_LOOT),
 		JUNGLE_TOMB_4(UrnType.NORMAL, jungleColor_2, jungleColor_1, "burial", "jungle", JUNGLE_TOMB_LOOT),
-		SNOW_BASEMENTS_1(UrnType.NORMAL, ColorHelper.mixColor(EnumDyeColor.YELLOW.getColorValue(), EnumDyeColor.ORANGE.getColorValue(), EnumDyeColor.SILVER.getColorValue()), -1, "basement", "taiga", LootTables.URN_BASEMENTS_COLD_LOOT),
-		SNOW_BASEMENTS_2(UrnType.NORMAL, ColorHelper.mixColor(EnumDyeColor.BLUE.getColorValue(), EnumDyeColor.RED.getColorValue(), EnumDyeColor.LIME.getColorValue(), EnumDyeColor.WHITE.getColorValue()), -1, "basement", "taiga", LootTables.URN_BASEMENTS_COLD_LOOT),
-		SNOW_BASEMENTS_3(UrnType.NORMAL, ColorHelper.mixColor(EnumDyeColor.BROWN.getColorValue(), EnumDyeColor.ORANGE.getColorValue(), EnumDyeColor.WHITE.getColorValue(), EnumDyeColor.LIGHT_BLUE.getColorValue()), -1, "basement", "taiga", LootTables.URN_BASEMENTS_COLD_LOOT),
-		SNOW_BASEMENTS_4(UrnType.NORMAL, ColorHelper.mixColor(EnumDyeColor.GRAY.getColorValue(), EnumDyeColor.ORANGE.getColorValue(), EnumDyeColor.WHITE.getColorValue()), -1, "basement", "taiga", LootTables.URN_BASEMENTS_COLD_LOOT),
-		SNOW_BASEMENTS_5(UrnType.NORMAL, ColorHelper.mixColor(EnumDyeColor.YELLOW.getColorValue(), EnumDyeColor.BROWN.getColorValue(), EnumDyeColor.CYAN.getColorValue(), EnumDyeColor.WHITE.getColorValue()), -1, "basement", "taiga", LootTables.URN_BASEMENTS_COLD_LOOT),
-		SNOW_WELLS_1(UrnType.NORMAL, ColorHelper.mixColor(EnumDyeColor.BROWN.getColorValue(), EnumDyeColor.LIGHT_BLUE.getColorValue(), EnumDyeColor.SILVER.getColorValue(), EnumDyeColor.SILVER.getColorValue()), -1, "well", "taiga", LootTables.URN_WELLS_LOOT),
-		SNOW_WELLS_2(UrnType.STARS, ColorHelper.mixColor(EnumDyeColor.BROWN.getColorValue(), EnumDyeColor.LIGHT_BLUE.getColorValue(), EnumDyeColor.SILVER.getColorValue(), EnumDyeColor.SILVER.getColorValue()), ColorHelper.mixColor(EnumDyeColor.BROWN.getColorValue(), EnumDyeColor.BROWN.getColorValue(), EnumDyeColor.LIGHT_BLUE.getColorValue(), EnumDyeColor.SILVER.getColorValue()), "well", "taiga", LootTables.URN_WELLS_LOOT),
-		SNOW_WELLS_3(UrnType.STARS, ColorHelper.mixColor(EnumDyeColor.BROWN.getColorValue(), EnumDyeColor.LIGHT_BLUE.getColorValue(), EnumDyeColor.SILVER.getColorValue(), EnumDyeColor.SILVER.getColorValue()), ColorHelper.mixColor(EnumDyeColor.BROWN.getColorValue(), EnumDyeColor.BROWN.getColorValue(), EnumDyeColor.BROWN.getColorValue(), EnumDyeColor.LIGHT_BLUE.getColorValue(), EnumDyeColor.SILVER.getColorValue()), "well", "taiga", LootTables.URN_WELLS_LOOT),
+		SNOW_BASEMENTS_1(UrnType.NORMAL, mixColor(EnumDyeColor.YELLOW.getColorComponentValues(), EnumDyeColor.ORANGE.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues()), -1, "basement", "taiga", LootTables.URN_BASEMENTS_COLD_LOOT),
+		SNOW_BASEMENTS_2(UrnType.NORMAL, mixColor(EnumDyeColor.BLUE.getColorComponentValues(), EnumDyeColor.RED.getColorComponentValues(), EnumDyeColor.LIME.getColorComponentValues(), EnumDyeColor.WHITE.getColorComponentValues()), -1, "basement", "taiga", LootTables.URN_BASEMENTS_COLD_LOOT),
+		SNOW_BASEMENTS_3(UrnType.NORMAL, mixColor(EnumDyeColor.BROWN.getColorComponentValues(), EnumDyeColor.ORANGE.getColorComponentValues(), EnumDyeColor.WHITE.getColorComponentValues(), EnumDyeColor.LIGHT_BLUE.getColorComponentValues()), -1, "basement", "taiga", LootTables.URN_BASEMENTS_COLD_LOOT),
+		SNOW_BASEMENTS_4(UrnType.NORMAL, mixColor(EnumDyeColor.GRAY.getColorComponentValues(), EnumDyeColor.ORANGE.getColorComponentValues(), EnumDyeColor.WHITE.getColorComponentValues()), -1, "basement", "taiga", LootTables.URN_BASEMENTS_COLD_LOOT),
+		SNOW_BASEMENTS_5(UrnType.NORMAL, mixColor(EnumDyeColor.YELLOW.getColorComponentValues(), EnumDyeColor.BROWN.getColorComponentValues(), EnumDyeColor.CYAN.getColorComponentValues(), EnumDyeColor.WHITE.getColorComponentValues()), -1, "basement", "taiga", LootTables.URN_BASEMENTS_COLD_LOOT),
+		SNOW_WELLS_1(UrnType.NORMAL, mixColor(EnumDyeColor.BROWN.getColorComponentValues(), EnumDyeColor.LIGHT_BLUE.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues()), -1, "well", "taiga", LootTables.URN_WELLS_LOOT),
+		SNOW_WELLS_2(UrnType.STARS, mixColor(EnumDyeColor.BROWN.getColorComponentValues(), EnumDyeColor.LIGHT_BLUE.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues()), mixColor(EnumDyeColor.BROWN.getColorComponentValues(), EnumDyeColor.BROWN.getColorComponentValues(), EnumDyeColor.LIGHT_BLUE.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues()), "well", "taiga", LootTables.URN_WELLS_LOOT),
+		SNOW_WELLS_3(UrnType.STARS, mixColor(EnumDyeColor.BROWN.getColorComponentValues(), EnumDyeColor.LIGHT_BLUE.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues()), mixColor(EnumDyeColor.BROWN.getColorComponentValues(), EnumDyeColor.BROWN.getColorComponentValues(), EnumDyeColor.BROWN.getColorComponentValues(), EnumDyeColor.LIGHT_BLUE.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues()), "well", "taiga", LootTables.URN_WELLS_LOOT),
 		SNOW_TOMB_1(UrnType.NORMAL, snowColor_1, -1, "burial", "taiga", SNOW_TOMB_LOOT),
 		SNOW_TOMB_2(UrnType.LINE, snowColor_1, snowColor_2, "burial", "taiga", SNOW_TOMB_LOOT),
 		SNOW_TOMB_3(UrnType.LINE, snowColor_1, snowColor_3, "burial", "taiga", SNOW_TOMB_LOOT),
 		SNOW_TOMB_4(UrnType.ZONE, snowColor_1, snowColor_2, "burial", "taiga", SNOW_TOMB_LOOT),
 		SNOW_TOMB_5(UrnType.ZONE, snowColor_1, snowColor_3, "burial", "taiga", SNOW_TOMB_LOOT),
-		FOREST_BASEMENTS_1(UrnType.ZONE, ColorHelper.mixColor(EnumDyeColor.WHITE.getColorValue()), ColorHelper.mixColor(EnumDyeColor.RED.getColorValue(), EnumDyeColor.ORANGE.getColorValue(), EnumDyeColor.WHITE.getColorValue()), "basement", "forest", LootTables.URN_BASEMENTS_FOREST_LOOT),
-		FOREST_BASEMENTS_2(UrnType.CLOTH, ColorHelper.mixColor(EnumDyeColor.WHITE.getColorValue(), EnumDyeColor.SILVER.getColorValue()), ColorHelper.mixColor(EnumDyeColor.BROWN.getColorValue(), EnumDyeColor.ORANGE.getColorValue(), EnumDyeColor.LIME.getColorValue()), "basement", "forest", LootTables.URN_BASEMENTS_FOREST_LOOT),
-		FOREST_BASEMENTS_3(UrnType.STRIPE, ColorHelper.mixColor(EnumDyeColor.WHITE.getColorValue(), EnumDyeColor.SILVER.getColorValue(), EnumDyeColor.BROWN.getColorValue()), ColorHelper.mixColor(EnumDyeColor.WHITE.getColorValue(), EnumDyeColor.BROWN.getColorValue()), "basement", "forest", LootTables.URN_BASEMENTS_FOREST_LOOT),
-		FOREST_WELLS_1(UrnType.PATINA, ColorHelper.mixColor(EnumDyeColor.YELLOW.getColorValue(), EnumDyeColor.ORANGE.getColorValue(), EnumDyeColor.GREEN.getColorValue()), ColorHelper.mixColor(EnumDyeColor.BROWN.getColorValue(), EnumDyeColor.BROWN.getColorValue(), EnumDyeColor.BROWN.getColorValue(), EnumDyeColor.WHITE.getColorValue()), "well", "forest", LootTables.URN_WELLS_LOOT),
-		FOREST_WELLS_2(UrnType.PATINA, ColorHelper.mixColor(EnumDyeColor.BROWN.getColorValue(), EnumDyeColor.WHITE.getColorValue()), ColorHelper.mixColor(EnumDyeColor.RED.getColorValue(), EnumDyeColor.SILVER.getColorValue(), EnumDyeColor.SILVER.getColorValue(), EnumDyeColor.SILVER.getColorValue()), "well", "forest", LootTables.URN_WELLS_LOOT),
+		FOREST_BASEMENTS_1(UrnType.ZONE, mixColor(EnumDyeColor.WHITE.getColorComponentValues()), mixColor(EnumDyeColor.RED.getColorComponentValues(), EnumDyeColor.ORANGE.getColorComponentValues(), EnumDyeColor.WHITE.getColorComponentValues()), "basement", "forest", LootTables.URN_BASEMENTS_FOREST_LOOT),
+		FOREST_BASEMENTS_2(UrnType.CLOTH, mixColor(EnumDyeColor.WHITE.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues()), mixColor(EnumDyeColor.BROWN.getColorComponentValues(), EnumDyeColor.ORANGE.getColorComponentValues(), EnumDyeColor.LIME.getColorComponentValues()), "basement", "forest", LootTables.URN_BASEMENTS_FOREST_LOOT),
+		FOREST_BASEMENTS_3(UrnType.STRIPE, mixColor(EnumDyeColor.WHITE.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues(), EnumDyeColor.BROWN.getColorComponentValues()), mixColor(EnumDyeColor.WHITE.getColorComponentValues(), EnumDyeColor.BROWN.getColorComponentValues()), "basement", "forest", LootTables.URN_BASEMENTS_FOREST_LOOT),
+		FOREST_WELLS_1(UrnType.PATINA, mixColor(EnumDyeColor.YELLOW.getColorComponentValues(), EnumDyeColor.ORANGE.getColorComponentValues(), EnumDyeColor.GREEN.getColorComponentValues()), mixColor(EnumDyeColor.BROWN.getColorComponentValues(), EnumDyeColor.BROWN.getColorComponentValues(), EnumDyeColor.BROWN.getColorComponentValues(), EnumDyeColor.WHITE.getColorComponentValues()), "well", "forest", LootTables.URN_WELLS_LOOT),
+		FOREST_WELLS_2(UrnType.PATINA, mixColor(EnumDyeColor.BROWN.getColorComponentValues(), EnumDyeColor.WHITE.getColorComponentValues()), mixColor(EnumDyeColor.RED.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues(), EnumDyeColor.SILVER.getColorComponentValues()), "well", "forest", LootTables.URN_WELLS_LOOT),
 		FOREST_TOMB_1(UrnType.NORMAL, forestColor_1, -1, "burial", "forest", FOREST_TOMB_LOOT),
 		FOREST_TOMB_2(UrnType.PATINA, forestColor_1, forestColor_2, "burial", "forest", FOREST_TOMB_LOOT),
 		FOREST_TOMB_3(UrnType.STRIPE, forestColor_1, forestColor_2, "burial", "forest", FOREST_TOMB_LOOT),
@@ -582,6 +582,24 @@ public class TileEntityUrn extends TileEntityLockableLoot implements ITickable {
 				}
 			}
 		}
+	}
+
+	private static int mixColor(float[]... colorComponents) {
+		int r = 0, g = 0, b = 0;
+		int count = colorComponents.length;
+
+		for (float[] components : colorComponents) {
+			// Scale the float values (0.0 to 1.0) to integers (0 to 255)
+			r += (int) (components[0] * 255);
+			g += (int) (components[1] * 255);
+			b += (int) (components[2] * 255);
+		}
+
+		r /= count;
+		g /= count;
+		b /= count;
+
+		return (r << 16) | (g << 8) | b;
 	}
 
 	public static enum UrnLocation {

@@ -48,7 +48,7 @@ public class Mist {
 
 	public static final String MODID = "mist";
 	public static final String NAME = "misty_world";
-	public static final String VERSION = "1.2.6.3a";
+	public static final String VERSION = "1.2.6.4";
 	public static final Logger logger = LogManager.getLogger(NAME);
 	public static DimensionType dimensionType;
 	public static CreativeTabs mistTab = new MistTab("mist.tab");

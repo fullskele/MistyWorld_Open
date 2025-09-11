@@ -98,15 +98,9 @@ dependencies {
 // Example for how to get properties into the manifest for reading by the runtime..
 jar {
     manifest {
-        attributes([
-                "Specification-Title": "examplemod",
-                "Specification-Vendor": "examplemodsareus",
-                "Specification-Version": "1", // We are version 1 of ourselves
-                "Implementation-Title": project.name,
-                "Implementation-Version": "${version}",
-                "Implementation-Vendor" :"examplemodsareus",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-        ])
+        attributes 'FMLAT': 'mist_at.cfg'
+        attributes 'FMLCorePlugin': 'ru.liahim.mist.core.hooks.MistHookLoader'
+        attributes 'FMLCorePluginContainsFMLMod': 'true'
     }
 }
 

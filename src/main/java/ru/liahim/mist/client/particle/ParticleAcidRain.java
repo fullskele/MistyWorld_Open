@@ -26,9 +26,9 @@ public class ParticleAcidRain extends Particle {
         this.motionX *= 0.3D;
         this.motionY = Math.random() * 0.2D + 0.1D;
         this.motionZ *= 0.3D;
-        this.particleRed = 0.0F;
+        this.particleRed = 1.0F;
         this.particleGreen = 1.0F;
-        this.particleBlue = 0.0F;
+        this.particleBlue = 1.0F;
         this.setParticleTexture(Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(new ResourceLocation(Mist.MODID, "particle/rain").toString()));
         this.index = this.rand.nextInt(4);
         this.setSize(0.01F, 0.01F);

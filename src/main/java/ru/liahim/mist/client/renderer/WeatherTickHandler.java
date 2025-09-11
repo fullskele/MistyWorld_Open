@@ -8,12 +8,14 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 @Mod.EventBusSubscriber
 public class WeatherTickHandler {
 
+    public static int rendererUpdateCount;
+
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         if (event.phase == TickEvent.Phase.START) return;
         Minecraft mc = Minecraft.getMinecraft();
         if (mc.world != null && mc.entityRenderer != null) {
-            WeatherRendererMist.incrementRendererUpdateCount();
+            rendererUpdateCount++;
         }
     }
 }

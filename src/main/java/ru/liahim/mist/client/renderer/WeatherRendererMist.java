@@ -22,8 +22,6 @@ public class WeatherRendererMist extends IRenderHandler {
     private final float[] rainXCoords = initializeRainCoords(true);
     private final float[] rainYCoords = initializeRainCoords(false);
 
-    private static int rendererUpdateCount = 0;
-
 
     private static float[] initializeRainCoords(boolean isX) {
         float[] coords = new float[1024];
@@ -40,10 +38,6 @@ public class WeatherRendererMist extends IRenderHandler {
             }
         }
         return coords;
-    }
-
-    public static void incrementRendererUpdateCount() {
-        rendererUpdateCount++;
     }
 
     @Override
@@ -72,7 +66,7 @@ public class WeatherRendererMist extends IRenderHandler {
             if (mc.gameSettings.fancyGraphics) i1 = 10;
 
             int j1 = -1;
-            float f1 = rendererUpdateCount + partialTicks;
+            float f1 = WeatherTickHandler.rendererUpdateCount + partialTicks;
             bufferbuilder.setTranslation(-d0, -d1, -d2);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
@@ -113,7 +107,7 @@ public class WeatherRendererMist extends IRenderHandler {
                                     bufferbuilder.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
                                 }
 
-                                double d5 = -((double)(rendererUpdateCount + l1 * l1 * 3121 + l1 * 45238971 + k1 * k1 * 418711 + k1 * 13761 & 31) + (double)partialTicks) / 32.0D * (3.0D + mc.world.rand.nextDouble());
+                                double d5 = -((double)(WeatherTickHandler.rendererUpdateCount + l1 * l1 * 3121 + l1 * 45238971 + k1 * k1 * 418711 + k1 * 13761 & 31) + (double)partialTicks) / 32.0D * (3.0D + mc.world.rand.nextDouble());
                                 double d6 = l1 + 0.5F - entity.posX;
                                 double d7 = k1 + 0.5F - entity.posZ;
                                 float f3 = MathHelper.sqrt(d6 * d6 + d7 * d7) / i1;
@@ -134,7 +128,7 @@ public class WeatherRendererMist extends IRenderHandler {
                                     bufferbuilder.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
                                 }
 
-                                double d8 = -((rendererUpdateCount & 511) + partialTicks) / 512.0F;
+                                double d8 = -((WeatherTickHandler.rendererUpdateCount & 511) + partialTicks) / 512.0F;
                                 double d9 = mc.world.rand.nextDouble() + f1 * 0.01D * ((float)mc.world.rand.nextGaussian());
                                 double d10 = mc.world.rand.nextDouble() + f1 * (float)mc.world.rand.nextGaussian() * 0.001D;
                                 double d11 = l1 + 0.5F - entity.posX;
